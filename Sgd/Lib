@@ -154,18 +154,20 @@ function Lib:CreateWindow(title)
 	local dragStart = nil
 	local startPos  = nil
 
-	titleBar.InputBegan:Connect(function(i)
-		if i.UserInputType == Enum.UserInputType.MouseButton1
-		or i.UserInputType == Enum.UserInputType.Touch then
+	frame.InputBegan:Connect(function(i)
+	if i.UserInputType == Enum.UserInputType.MouseButton1
+	or i.UserInputType == Enum.UserInputType.Touch then
+		if i.Position.Y - frame.AbsolutePosition.Y < 40 then
 			dragging = true; dragStart = i.Position; startPos = frame.Position
 		end
-	end)
-	titleBar.InputEnded:Connect(function(i)
-		if i.UserInputType == Enum.UserInputType.MouseButton1
-		or i.UserInputType == Enum.UserInputType.Touch then
-			dragging = false
-		end
-	end)
+	end
+end)
+frame.InputEnded:Connect(function(i)
+	if i.UserInputType == Enum.UserInputType.MouseButton1
+	or i.UserInputType == Enum.UserInputType.Touch then
+		dragging = false
+	end
+end)
 	UIS.InputChanged:Connect(function(i)
 		if not dragging then return end
 		if i.UserInputType == Enum.UserInputType.MouseMovement
@@ -475,12 +477,14 @@ function Lib:CreateWindow(title)
 		dropFrame.ClipsDescendants = true
 		dropFrame.LayoutOrder      = nxt()
 		dropFrame.Parent           = scroll
+        dropFrame.Active = false
 		Instance.new("UICorner", dropFrame)
 		Instance.new("UIListLayout", dropFrame)
 		local open = false
 		for _, v in ipairs(options or {}) do
 			local opt = Instance.new("TextButton")
 			opt.Size             = UDim2.new(1,0,0,30)
+            opt.Active           = true
 			opt.Text             = v
 			opt.BackgroundColor3 = Color3.fromRGB(30,30,30)
 			opt.TextColor3       = Color3.new(1,1,1)
