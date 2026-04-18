@@ -9,4 +9,5 @@ CTTO : @Tora IsMe
 Inspired By : Wizard Ui Library 
 
 ## Load Window
+```
 local UI = loadstring(game:HttpGet("YOUR RAW LINK HERE"))()
