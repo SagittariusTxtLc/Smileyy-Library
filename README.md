@@ -64,23 +64,15 @@ Win1:Label("Label Text")
 UI:Start()
 ```
 
-# BONUS
-Bonus For Ui (If Need)
+# EXTRA
+Bonus For Ui (If Needed)
 
 ## Load Folder
 ```lua
 local Folder1 = Win1:CreateFolder("Folder Name")
-```
-```lua
 Folder1:Button("Button", function() end)
-```
-```lua
 Folder1:Toggle("Toggle", false, function(v) end)
-```
-```lua
 Folder1:Slider("Slider", 0, 100, 50, function(v) end)
-```
-```lua
 Folder1:Dropdown("Dropdown", {"A","B","C"}, function(v) end)
 ```
 
@@ -92,4 +84,22 @@ local Win2 = UI:CreateWindow("Window 2")
 ```lua
 Win1:Button("Button 1", function() end)
 Win2:Button("Button 2", function() end)
+```
+
+# Get And Set Value
+```lua
+-- Toggle
+local myToggle = Win1:Toggle("Toggle", false, function(v) end)
+myToggle:Set(true)
+print(myToggle:Get())
+
+-- Slider
+local mySlider = Win1:Slider("Slider", 0, 100, 50, function(v) end)
+mySlider:Set(75)
+print(mySlider:Get())
+
+-- Dropdown
+local myDrop = Win1:Dropdown("Dropdown", {"A","B","C"}, function(v) end)
+myDrop:Set("B")
+print(myDrop:Get())
 ```
