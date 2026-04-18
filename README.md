@@ -18,3 +18,34 @@ local Win1 = UI:CreateWindow("Window Title")
 ```
 
 ## Load Button
+```lua
+Win1:Button("Button Text", function()
+    -- your script here
+end)
+```
+
+## Load Toggle
+```lua
+Win1:Toggle("Toggle Text", false, function(v)
+    if v then
+        -- on
+    else
+        -- off
+    end
+end)
+```
+
+## Load Slider
+```lua
+Win1:Slider("Slider Text", 0, 100, 50, function(v)
+    print(v)
+end)
+```
+
+## Load Drop-down
+```lua
+Win1:Dropdown("Dropdown Text", {"Option 1","Option 2","Option 3"}, function(v)
+    print(v)
+end)
+```
+
