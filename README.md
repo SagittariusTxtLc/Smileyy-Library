@@ -65,7 +65,6 @@ UI:Start()
 ```
 
 # EXTRA
-Bonus For Ui (If Needed)
 
 ## Load Folder
 ```lua
@@ -80,8 +79,6 @@ Folder1:Dropdown("Dropdown", {"A","B","C"}, function(v) end)
 ```lua
 local Win1 = UI:CreateWindow("Window 1")
 local Win2 = UI:CreateWindow("Window 2")
-```
-```lua
 Win1:Button("Button 1", function() end)
 Win2:Button("Button 2", function() end)
 ```
