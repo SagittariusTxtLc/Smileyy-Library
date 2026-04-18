@@ -183,9 +183,9 @@ function Lib:CreateWindow(title)
 		if not frame or not frame.Parent then return end
 		local sc  = workspace.CurrentCamera.ViewportSize
 		local pos = frame.Position
-		local x   = math.clamp(pos.X.Offset, 0, sc.X - frame.AbsoluteSize.X)
-		local y   = math.clamp(pos.Y.Offset, 0, sc.Y - frame.AbsoluteSize.Y)
-		if x ~= pos.X.Offset or y ~= pos.Y.Offset then
+		local x = math.clamp(pos.X.Offset, 0, math.max(0, sc.X - frame.AbsoluteSize.X))
+        local y = math.clamp(pos.Y.Offset, 0, math.max(0, sc.Y - frame.AbsoluteSize.Y))
+        if x ~= pos.X.Offset or y ~= pos.Y.Offset then
 			frame.Position = UDim2.new(0, x, 0, y)
 		end
 	end)
