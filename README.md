@@ -10,4 +10,4 @@ Inspired By : Wizard Ui Library
 
 ## Load Window
 ```
-local UI = loadstring(game:HttpGet("YOUR RAW LINK HERE"))()
+local UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/SagittariusTxtLc/Backon-Library/refs/heads/main/Sgd/Lib"))()
