@@ -8,7 +8,13 @@ CTTO : @Tora IsMe
 
 Inspired By : Wizard Ui Library 
 
-## Load Window
+## Load Library
 ```lua
 local UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/SagittariusTxtLc/Backon-Library/refs/heads/main/Sgd/Lib"))()
 ```
+## Load Window
+```lua
+local Win1 = UI:CreateWindow("Window Title")
+```
+
+## Load Button
