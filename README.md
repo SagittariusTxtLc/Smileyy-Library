@@ -100,3 +100,7 @@ local myDrop = Win1:Dropdown("Dropdown", {"A","B","C"}, function(v) end)
 myDrop:Set("B")
 print(myDrop:Get())
 ```
+
+## Made By : @Backon4557
+## CTTO : @Tora IsMe
+## Inspired By : Wizard Ui Library
