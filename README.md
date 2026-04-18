@@ -85,6 +85,7 @@ Folder1:Dropdown("Dropdown", {"A","B","C"}, function(v) end)
 ```
 
 # Multi Window
+```lua
 local Win1 = UI:CreateWindow("Window 1")
 local Win2 = UI:CreateWindow("Window 2")
 ```
