@@ -214,7 +214,7 @@ end)
 		lbl.BackgroundTransparency = 1
 		lbl.TextColor3            = Color3.fromRGB(255,255,255)
 		lbl.Font                  = Enum.Font.GothamBlack
-		lbl.TextSize              = 17
+		lbl.TextSize              = 16
 		lbl.TextXAlignment        = Enum.TextXAlignment.Center
 		lbl.LayoutOrder           = nxt()
 		lbl.Parent                = scroll
