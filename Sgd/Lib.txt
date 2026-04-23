@@ -23,6 +23,7 @@ _gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 _gui.Parent         = player.PlayerGui
 
 local WIN_W        = 220
+local WIN_H        = 350  -- FIXED HEIGHT
 local WIN_MAR      = 15
 local WIN_Y        = 10
 local _windows     = {}
@@ -69,7 +70,7 @@ function Lib:CreateWindow(title)
 	table.insert(_windows, winData)
 
 	local frame = Instance.new("Frame")
-	frame.Size             = UDim2.new(0, WIN_W, 0, 100)
+	frame.Size             = UDim2.new(0, WIN_W, 0, WIN_H)  -- FIXED SIZE
 	frame.Position         = UDim2.new(0, WIN_MAR, 0, WIN_Y)
 	frame.BackgroundColor3 = Color3.fromRGB(0,0,0)
 	frame.ClipsDescendants = true
@@ -123,13 +124,11 @@ function Lib:CreateWindow(title)
 	pad.Parent        = scroll
 
 	local collapsed = false
+
+	-- ONLY UPDATE SCROLL CANVAS, NOT FRAME SIZE
 	local function updateCanvas()
 		task.defer(function()
 			scroll.CanvasSize = UDim2.new(0,0,0, layout.AbsoluteContentSize.Y + 10)
-			if not collapsed then
-				frame.Size = UDim2.new(0, WIN_W, 0,
-					math.clamp(layout.AbsoluteContentSize.Y + 50, 100, 400))
-			end
 		end)
 	end
 	layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(updateCanvas)
@@ -142,43 +141,41 @@ function Lib:CreateWindow(title)
 				{ Size = UDim2.new(0, WIN_W, 0, 40) }):Play()
 		else
 			colBtn.Text = " "
-			TweenService:Create(frame, TweenInfo.new(0.25), {
-				Size = UDim2.new(0, WIN_W, 0,
-					math.clamp(layout.AbsoluteContentSize.Y + 50, 100, 400))
-			}):Play()
+			TweenService:Create(frame, TweenInfo.new(0.25),
+				{ Size = UDim2.new(0, WIN_W, 0, WIN_H) }):Play()
 		end
 	end)
 
 	-- DRAG
 	local dragging  = false
-local dragStart = nil
-local startPos  = nil
+	local dragStart = nil
+	local startPos  = nil
 
-titleBar.InputBegan:Connect(function(i)
-	if i.UserInputType == Enum.UserInputType.MouseButton1
-	or i.UserInputType == Enum.UserInputType.Touch then
-		dragging = true
-		dragStart = i.Position
-		startPos = frame.Position
-	end
-end)
-titleBar.InputEnded:Connect(function(i)
-	if i.UserInputType == Enum.UserInputType.MouseButton1
-	or i.UserInputType == Enum.UserInputType.Touch then
-		dragging = false
-	end
-end)
-UIS.InputChanged:Connect(function(i)
-	if not dragging then return end
-	if i.UserInputType == Enum.UserInputType.MouseMovement
-	or i.UserInputType == Enum.UserInputType.Touch then
-		local sc    = workspace.CurrentCamera.ViewportSize
-		local delta = i.Position - dragStart
-		local newX  = math.clamp(startPos.X.Offset + delta.X, 0, math.max(0, sc.X - frame.AbsoluteSize.X))
-		local newY  = math.clamp(startPos.Y.Offset + delta.Y, 0, math.max(0, sc.Y - frame.AbsoluteSize.Y))
-		frame.Position = UDim2.new(0, newX, 0, newY)
-	end
-end)
+	titleBar.InputBegan:Connect(function(i)
+		if i.UserInputType == Enum.UserInputType.MouseButton1
+		or i.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = i.Position
+			startPos = frame.Position
+		end
+	end)
+	titleBar.InputEnded:Connect(function(i)
+		if i.UserInputType == Enum.UserInputType.MouseButton1
+		or i.UserInputType == Enum.UserInputType.Touch then
+			dragging = false
+		end
+	end)
+	UIS.InputChanged:Connect(function(i)
+		if not dragging then return end
+		if i.UserInputType == Enum.UserInputType.MouseMovement
+		or i.UserInputType == Enum.UserInputType.Touch then
+			local sc    = workspace.CurrentCamera.ViewportSize
+			local delta = i.Position - dragStart
+			local newX  = math.clamp(startPos.X.Offset + delta.X, 0, math.max(0, sc.X - frame.AbsoluteSize.X))
+			local newY  = math.clamp(startPos.Y.Offset + delta.Y, 0, math.max(0, sc.Y - frame.AbsoluteSize.Y))
+			frame.Position = UDim2.new(0, newX, 0, newY)
+		end
+	end)
 
 	-- ANTI OUT OF SCREEN
 	RunService.RenderStepped:Connect(function()
@@ -186,8 +183,8 @@ end)
 		local sc  = workspace.CurrentCamera.ViewportSize
 		local pos = frame.Position
 		local x = math.clamp(pos.X.Offset, 0, math.max(0, sc.X - frame.AbsoluteSize.X))
-        local y = math.clamp(pos.Y.Offset, 0, math.max(0, sc.Y - frame.AbsoluteSize.Y))
-        if x ~= pos.X.Offset or y ~= pos.Y.Offset then
+		local y = math.clamp(pos.Y.Offset, 0, math.max(0, sc.Y - frame.AbsoluteSize.Y))
+		if x ~= pos.X.Offset or y ~= pos.Y.Offset then
 			frame.Position = UDim2.new(0, x, 0, y)
 		end
 	end)
@@ -477,14 +474,12 @@ end)
 		dropFrame.ClipsDescendants = true
 		dropFrame.LayoutOrder      = nxt()
 		dropFrame.Parent           = scroll
-        dropFrame.Active = false
 		Instance.new("UICorner", dropFrame)
 		Instance.new("UIListLayout", dropFrame)
 		local open = false
 		for _, v in ipairs(options or {}) do
 			local opt = Instance.new("TextButton")
 			opt.Size             = UDim2.new(1,0,0,30)
-            opt.Active           = true
 			opt.Text             = v
 			opt.BackgroundColor3 = Color3.fromRGB(30,30,30)
 			opt.TextColor3       = Color3.new(1,1,1)
@@ -541,7 +536,6 @@ end)
 
 		local cPad = Instance.new("UIPadding")
 		cPad.PaddingLeft   = UDim.new(0,8)
-		cPad.PaddingRight  = UDim.new(0,0)
 		cPad.PaddingBottom = UDim.new(0,4)
 		cPad.Parent        = content
 
