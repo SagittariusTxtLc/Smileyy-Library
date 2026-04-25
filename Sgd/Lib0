@@ -82,7 +82,7 @@ local function _reposition()
 	local sw  = workspace.CurrentCamera.ViewportSize.X
 	local pos = {}
 	if n == 1 then
-		pos = { WIN_MAR }
+		pos = { (sw / 2) - (WIN_W / 2) }
 	elseif n == 2 then
 		pos = { WIN_MAR, sw - WIN_W - WIN_MAR }
 	else
