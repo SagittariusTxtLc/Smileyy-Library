@@ -653,7 +653,7 @@ end
 		cLayout.Parent    = content
 
 		local cPad = Instance.new("UIPadding")
-		cPad.PaddingLeft   = UDim.new(0,8)
+		cPad.PaddingLeft   = UDim.new(0,0)
 		cPad.PaddingRight  = UDim.new(0,0)
 		cPad.PaddingBottom = UDim.new(0,4)
 		cPad.Parent        = content
@@ -991,7 +991,7 @@ end
 
 	updateCanvas()
 	return Win
-end
+end 
 
 function Lib:Start()
 	_loaded = true
