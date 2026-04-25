@@ -252,23 +252,20 @@ function Lib:CreateWindow(title)
 	end
 
 	-- LABEL
-	function Win:AddLabel(cfg)
-		local text = type(cfg) == "table" and cfg.text or cfg
-		local lbl = Instance.new("TextLabel")
-		lbl.Size                   = UDim2.new(1,0,0,30)
-		lbl.Text                   = text or "Label"
-		lbl.BackgroundTransparency = 1
-		lbl.TextColor3             = Color3.fromRGB(255,255,255)
-		lbl.Font                   = Enum.Font.GothamBlack
-		lbl.TextSize               = 16
-		lbl.TextXAlignment         = Enum.TextXAlignment.Center
-		lbl.LayoutOrder            = nxt()
-		lbl.Parent                 = scroll
-		local lp = Instance.new("UIPadding")
-		lp.PaddingLeft = UDim.new(0,8); lp.Parent = lbl
-		updateCanvas()
-		return lbl
-	end
+	function Win:SetLabel(text)
+    local bottomLabel = Instance.new("TextLabel")
+    bottomLabel.Size             = UDim2.new(1,0,0,25)
+    bottomLabel.AnchorPoint      = Vector2.new(0,1)
+    bottomLabel.Position         = UDim2.new(0,0,1,0)
+    bottomLabel.BackgroundColor3 = Color3.fromRGB(15,15,15)
+    bottomLabel.TextColor3       = Color3.fromRGB(150,150,150)
+    bottomLabel.Font             = Enum.Font.GothamBold
+    bottomLabel.TextSize         = 12
+    bottomLabel.Text             = text or ""
+    bottomLabel.Parent           = frame
+    -- shrink scroll so it doesnt overlap
+    scroll.Size = UDim2.new(1,0,0, MAX_WIN_H - TITLE_H - 25)
+end
 
 	-- SECTION
 	function Win:AddSection(cfg)
