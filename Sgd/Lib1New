@@ -162,7 +162,7 @@ labelCorner.Parent       = bottomLabel
 local line = Instance.new("Frame")
 line.Size             = UDim2.new(1,0,0,1)
 line.Position         = UDim2.new(0,0,0,0)
-line.BackgroundColor3 = Color3.fromRGB(220,20,60)
+line.BackgroundColor3 = Color3.fromRGB(0,0,0)
 line.BorderSizePixel  = 0
 line.Parent           = bottomLabel
 
@@ -173,7 +173,7 @@ line.Parent           = bottomLabel
 	scroll.Position             = UDim2.new(0,0,0, TITLE_H)
 	scroll.BackgroundTransparency = 1
 	scroll.ScrollBarThickness   = 0
-	scroll.ScrollBarImageColor3 = Color3.fromRGB(220,20,60)
+	scroll.ScrollBarImageColor3 = Color3.fromRGB(40,40,40)
 	scroll.CanvasSize           = UDim2.new(0,0,0,0)
 	scroll.AutomaticCanvasSize  = Enum.AutomaticSize.Y
 	scroll.Parent               = frame
