@@ -253,13 +253,22 @@ function Lib:CreateWindow(title)
 	function Win:SetPosition(x, y) frame.Position = UDim2.new(0, x, 0, y) end
 
 	function Win:SetLabel(text)
-		labelH                   = 25
-		bottomLabel.Size         = UDim2.new(1,0,0,25)
-		bottomLabel.Text         = text or ""
-		bottomLabel.Visible      = true
-		scroll.Size              = UDim2.new(1,0,0, MAX_WIN_H - TITLE_H - 25)
-		updateCanvas()
-	end
+    labelH                   = 25
+    bottomLabel.Size         = UDim2.new(1,0,0,25)
+    bottomLabel.Text         = text or ""
+    bottomLabel.Visible      = true
+
+    -- Smooth stroke
+    local stroke = Instance.new("UIStroke")
+    stroke.Color             = Color3.fromRGB(0,0,0)  -- color
+    stroke.Thickness         = 1                           -- thickness
+    stroke.Transparency      = 0                           -- 0 = fully visible
+    stroke.ApplyStrokeMode   = Enum.ApplyStrokeMode.Border
+    stroke.Parent            = bottomLabel
+
+    scroll.Size              = UDim2.new(1,0,0, MAX_WIN_H - TITLE_H - 25)
+    updateCanvas()
+end
 
 	function Win:Destroy()
 		frame:Destroy()
