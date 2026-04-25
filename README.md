@@ -95,5 +95,5 @@ print(myDrop:Get())
 ```
 
 # Made By : That Smileyy YT
-# CTTO : @Tora IsMe YT
+# CTTO : Tora IsMe YT
 # Inspired By : Wizard Ui Library
