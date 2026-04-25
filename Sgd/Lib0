@@ -82,7 +82,7 @@ local function _reposition()
 	local sw  = workspace.CurrentCamera.ViewportSize.X
 	local pos = {}
 	if n == 1 then
-		pos = { (sw / 2) - (WIN_W / 2) }
+		pos = { WIN_MAR }
 	elseif n == 2 then
 		pos = { WIN_MAR, sw - WIN_W - WIN_MAR }
 	else
@@ -106,7 +106,7 @@ function Lib:CreateWindow(title)
 
 	local frame = Instance.new("Frame")
 	frame.Size             = UDim2.new(0, WIN_W, 0, TITLE_H)
-	frame.Position = UDim2.new(0, (workspace.CurrentCamera.ViewportSize.X / 2) - (WIN_W / 2), 0, WIN_Y)
+	frame.Position         = UDim2.new(0, WIN_MAR, 0, WIN_Y)
 	frame.BackgroundColor3 = Color3.fromRGB(0,0,0)
 	frame.ClipsDescendants = true
 	frame.Active           = true
@@ -354,10 +354,10 @@ end
 		arr.ZIndex             = btn.ZIndex + 1
 		arr.BackgroundTransparency = 1
 		arr.Image              = "rbxthumb://type=Asset&id=78012821883673&w=420&h=420"
-		arr.ImageColor3        = Color3.fromRGB(255,255,255)
+		arr.ImageColor3        = Color3.fromRGB(200,200,200)
 		arr.Parent             = btn
 		btn.MouseButton1Click:Connect(function()
-			_tween(btn, 0.08, { BackgroundColor3 = Color3.fromRGB(220,20,60) })
+			_tween(btn, 0.08, { BackgroundColor3 = Color3.fromRGB(255,255,255) })
 			task.delay(0.12, function()
 				_tween(btn, 0.12, { BackgroundColor3 = Color3.fromRGB(25,25,25) })
 			end)
@@ -392,15 +392,15 @@ end
 		lbl.TextXAlignment     = Enum.TextXAlignment.Left
 		lbl.Parent             = row
 		local box = Instance.new("Frame")
-		box.Size             = UDim2.new(0,22,0,22)
+		box.Size             = UDim2.new(0,24,0,24)
 		box.Position         = UDim2.new(1,-34,0.5,-12)
-		box.BackgroundColor3 = state and Color3.fromRGB(220,20,60) or Color3.fromRGB(40,40,40)
+		box.BackgroundColor3 = state and Color3.fromRGB(255,255,255) or Color3.fromRGB(40,40,40)
 		box.Parent           = row
 		_corner(box)
 		if flag then _flags[flag] = state end
 		row.MouseButton1Click:Connect(function()
 			state = not state
-			_tween(box, 0.15, { BackgroundColor3 = state and Color3.fromRGB(220,20,60) or Color3.fromRGB(40,40,40) })
+			_tween(box, 0.15, { BackgroundColor3 = state and Color3.fromRGB(255,255,255) or Color3.fromRGB(40,40,40) })
 			if flag then _flags[flag] = state end
 			if callback then pcall(callback, state) end
 		end)
@@ -408,7 +408,7 @@ end
 		local T = {}
 		function T:Set(v)
 			state = v
-			_tween(box, 0.15, { BackgroundColor3 = v and Color3.fromRGB(220,20,60) or Color3.fromRGB(40,40,40) })
+			_tween(box, 0.15, { BackgroundColor3 = v and Color3.fromRGB(255,255,255) or Color3.fromRGB(40,40,40) })
 			if flag then _flags[flag] = v end
 		end
 		function T:Get() return state end
@@ -466,14 +466,14 @@ end
 		local ip = (val-min)/(max-min)
 		local fill = Instance.new("Frame")
 		fill.Size             = UDim2.new(ip,0,1,0)
-		fill.BackgroundColor3 = Color3.fromRGB(220,20,60)
+		fill.BackgroundColor3 = Color3.fromRGB(255,255,255)
 		fill.Parent           = bar
 		_corner(fill)
 		local knob = Instance.new("Frame")
 		knob.Size        = UDim2.new(0,16,0,16)
 		knob.AnchorPoint = Vector2.new(0.5,0.5)
 		knob.Position    = UDim2.new(ip,0,0.5,0)
-		knob.BackgroundColor3 = Color3.fromRGB(220,20,60)
+		knob.BackgroundColor3 = Color3.fromRGB(255,255,255)
 		knob.Parent      = bar
 		_corner(knob)
 		if flag then _flags[flag] = val end
@@ -627,11 +627,11 @@ end
 
 	function Win:CreateFolder(folderName)
 		local tabBtn = Instance.new("TextButton")
-		tabBtn.Size             = UDim2.new(1,0,0,34)
-		tabBtn.BackgroundColor3 = Color3.fromRGB(15,15,15)
+		tabBtn.Size             = UDim2.new(1,0,0,40)
+		tabBtn.BackgroundColor3 = Color3.fromRGB(25,25,25)
 		tabBtn.TextColor3       = Color3.fromRGB(180,180,180)
 		tabBtn.Font             = Enum.Font.GothamBold
-		tabBtn.TextSize         = 14
+		tabBtn.TextSize         = 16
 		tabBtn.Text             = "▶  " .. (folderName or "Folder")
 		tabBtn.TextXAlignment   = Enum.TextXAlignment.Left
 		tabBtn.LayoutOrder      = nxt()
@@ -680,7 +680,7 @@ end
 		tabBtn.MouseButton1Click:Connect(function()
 			folderOpen = not folderOpen
 			tabBtn.Text       = (folderOpen and "▼  " or "▶  ") .. (folderName or "Folder")
-			tabBtn.TextColor3 = folderOpen and Color3.fromRGB(220,20,60) or Color3.fromRGB(180,180,180)
+			tabBtn.TextColor3 = folderOpen and Color3.fromRGB(255,255,255) or Color3.fromRGB(180,180,180)
 			updateFolder()
 		end)
 
@@ -695,10 +695,10 @@ end
 			local btn = Instance.new("TextButton")
 			btn.Size             = UDim2.new(1,0,0,40)
 			btn.Text             = text
-			btn.BackgroundColor3 = Color3.fromRGB(20,20,20)
+			btn.BackgroundColor3 = Color3.fromRGB(25,25,25)
 			btn.TextColor3       = Color3.fromRGB(255,255,255)
 			btn.Font             = Enum.Font.GothamBold
-			btn.TextSize         = 14
+			btn.TextSize         = 16
 			btn.LayoutOrder      = fnxt()
 			btn.TextXAlignment   = Enum.TextXAlignment.Left
 			btn.Parent           = content
@@ -708,16 +708,16 @@ end
 			bp.PaddingRight = UDim.new(0,30)
 			bp.Parent       = btn
 			local arr = Instance.new("ImageLabel")
-			arr.Size               = UDim2.new(0,20,0,20)
+			arr.Size               = UDim2.new(0,16,0,16)
 			arr.AnchorPoint        = Vector2.new(1,0.5)
 			arr.Position           = UDim2.new(1,12,0.5,0)
 			arr.ZIndex             = btn.ZIndex + 1
 			arr.BackgroundTransparency = 1
 			arr.Image              = "rbxthumb://type=Asset&id=13306021335&w=420&h=420"
-			arr.ImageColor3        = Color3.fromRGB(255,255,255)
+			arr.ImageColor3        = Color3.fromRGB(200,200,200)
 			arr.Parent             = btn
 			btn.MouseButton1Click:Connect(function()
-				_tween(btn, 0.01, { BackgroundColor3 = Color3.fromRGB(255,255,255) })
+				_tween(btn, 0.08, { BackgroundColor3 = Color3.fromRGB(255,255,255) })
 				task.delay(0.12, function()
 					_tween(btn, 0.12, { BackgroundColor3 = Color3.fromRGB(20,20,20) })
 				end)
@@ -735,7 +735,7 @@ end
 			local callback = cfg.callback
 			local state    = default
 			local row = Instance.new("TextButton")
-			row.Size             = UDim2.new(1,0,0,40)
+			row.Size             = UDim2.new(1,0,0,36)
 			row.BackgroundColor3 = Color3.fromRGB(20,20,20)
 			row.Text             = ""
 			row.LayoutOrder      = fnxt()
@@ -754,13 +754,13 @@ end
 			local box = Instance.new("Frame")
 			box.Size             = UDim2.new(0,22,0,22)
 			box.Position         = UDim2.new(1,-32,0.5,-11)
-			box.BackgroundColor3 = state and Color3.fromRGB(220,20,60) or Color3.fromRGB(40,40,40)
+			box.BackgroundColor3 = state and Color3.fromRGB(255,255,255) or Color3.fromRGB(40,40,40)
 			box.Parent           = row
 			_corner(box)
 			if flag then _flags[flag] = state end
 			row.MouseButton1Click:Connect(function()
 				state = not state
-				_tween(box, 0.15, { BackgroundColor3 = state and Color3.fromRGB(220,20,60) or Color3.fromRGB(40,40,40) })
+				_tween(box, 0.15, { BackgroundColor3 = state and Color3.fromRGB(255,255,255) or Color3.fromRGB(40,40,40) })
 				if flag then _flags[flag] = state end
 				if callback then pcall(callback, state) end
 			end)
@@ -768,7 +768,7 @@ end
 			local T = {}
 			function T:Set(v)
 				state = v
-				_tween(box, 0.15, { BackgroundColor3 = v and Color3.fromRGB(220,20,60) or Color3.fromRGB(40,40,40) })
+				_tween(box, 0.15, { BackgroundColor3 = v and Color3.fromRGB(255,255,255) or Color3.fromRGB(40,40,40) })
 				if flag then _flags[flag] = v end
 			end
 			function T:Get() return state end
@@ -784,7 +784,7 @@ end
 			local callback = cfg.callback
 			local val = math.clamp(default, min, max)
 			local cont = Instance.new("Frame")
-			cont.Size             = UDim2.new(1,0,0,70)
+			cont.Size             = UDim2.new(1,0,0,65)
 			cont.BackgroundColor3 = Color3.fromRGB(20,20,20)
 			cont.LayoutOrder      = fnxt()
 			cont.Parent           = content
@@ -800,7 +800,7 @@ end
 			tLbl.BackgroundTransparency = 1
 			tLbl.Parent             = cont
 			local numBox = Instance.new("Frame")
-			numBox.Size             = UDim2.new(0.15,0,0,24)
+			numBox.Size             = UDim2.new(0.15,0,0,22)
 			numBox.Position         = UDim2.new(0.85,0,0,5)
 			numBox.BackgroundColor3 = Color3.fromRGB(40,40,40)
 			numBox.BorderSizePixel  = 0
@@ -826,14 +826,14 @@ end
 			local ip = (val-min)/(max-min)
 			local fill = Instance.new("Frame")
 			fill.Size             = UDim2.new(ip,0,1,0)
-			fill.BackgroundColor3 = Color3.fromRGB(220,20,60)
+			fill.BackgroundColor3 = Color3.fromRGB(255,255,255)
 			fill.Parent           = bar
 			_corner(fill)
 			local knob = Instance.new("Frame")
 			knob.Size        = UDim2.new(0,14,0,14)
 			knob.AnchorPoint = Vector2.new(0.5,0.5)
 			knob.Position    = UDim2.new(ip,0,0.5,0)
-			knob.BackgroundColor3 = Color3.fromRGB(220,20,60)
+			knob.BackgroundColor3 = Color3.fromRGB(255,255,255)
 			knob.Parent      = bar
 			_corner(knob)
 			if flag then _flags[flag] = val end
@@ -902,14 +902,14 @@ end
 			local callback   = cfg.callback
 			local selected   = "Select Option"
 			local dropBtn = Instance.new("TextButton")
-			dropBtn.Size             = UDim2.new(1,0,0,50)
+			dropBtn.Size             = UDim2.new(1,0,0,46)
 			dropBtn.BackgroundColor3 = Color3.fromRGB(20,20,20)
 			dropBtn.Text             = ""
 			dropBtn.LayoutOrder      = fnxt()
 			dropBtn.Parent           = content
 			_style(dropBtn)
 			local headLbl = Instance.new("TextLabel")
-			headLbl.Size               = UDim2.new(1,-10,0,18)
+			headLbl.Size               = UDim2.new(1,-10,0,16)
 			headLbl.Position           = UDim2.new(0,5,0,2)
 			headLbl.BackgroundTransparency = 1
 			headLbl.Text               = headerText
@@ -950,7 +950,7 @@ end
 			if flag then _flags[flag] = selected end
 			for _, v in ipairs(options) do
 				local opt = Instance.new("TextButton")
-				opt.Size             = UDim2.new(1,0,0,30)
+				opt.Size             = UDim2.new(1,0,0,28)
 				opt.Text             = v
 				opt.BackgroundColor3 = Color3.fromRGB(25,25,25)
 				opt.TextColor3       = Color3.new(1,1,1)
