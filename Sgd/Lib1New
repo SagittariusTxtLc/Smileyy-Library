@@ -27,7 +27,6 @@ _gui.ResetOnSpawn   = false
 _gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 _gui.Parent         = player.PlayerGui
 
--- CONSTANTS
 local WIN_W             = 220
 local WIN_MAR           = 15
 local WIN_Y             = 10
@@ -39,9 +38,8 @@ local MAX_WIN_H         = TITLE_H + (ITEM_H * MAX_ITEMS_VISIBLE) + 16
 local _windows     = {}
 local _loaded      = false
 local _pendingShow = {}
-local _flags       = {}  -- global flag storage
+local _flags       = {}
 
--- HELPERS
 local function _corner(obj, r)
 	local c = Instance.new("UICorner", obj)
 	c.CornerRadius = UDim.new(0, r or 6)
@@ -97,12 +95,10 @@ local function _reposition()
 	end
 end
 
--- GET FLAG VALUE
 function Lib:GetFlag(flag)
 	return _flags[flag]
 end
 
--- CREATE WINDOW
 function Lib:CreateWindow(title)
 
 	local winData = { shown = false }
@@ -142,8 +138,23 @@ function Lib:CreateWindow(title)
 	colBtn.TextColor3         = Color3.new(1,1,1)
 	colBtn.Parent             = titleBar
 
+	-- FIXED BOTTOM LABEL
+	local bottomLabel = Instance.new("TextLabel")
+	bottomLabel.Size             = UDim2.new(1,0,0,0)
+	bottomLabel.AnchorPoint      = Vector2.new(0,1)
+	bottomLabel.Position         = UDim2.new(0,0,1,0)
+	bottomLabel.BackgroundColor3 = Color3.fromRGB(15,15,15)
+	bottomLabel.TextColor3       = Color3.fromRGB(150,150,150)
+	bottomLabel.Font             = Enum.Font.GothamBold
+	bottomLabel.TextSize         = 12
+	bottomLabel.Text             = ""
+	bottomLabel.Visible          = false
+	bottomLabel.Parent           = frame
+
+	local scrollH = MAX_WIN_H - TITLE_H
+
 	local scroll = Instance.new("ScrollingFrame")
-	scroll.Size                 = UDim2.new(1,0,0, MAX_WIN_H - TITLE_H)
+	scroll.Size                 = UDim2.new(1,0,0, scrollH)
 	scroll.Position             = UDim2.new(0,0,0, TITLE_H)
 	scroll.BackgroundTransparency = 1
 	scroll.ScrollBarThickness   = 0
@@ -164,16 +175,17 @@ function Lib:CreateWindow(title)
 	pad.PaddingRight  = UDim.new(0,5)
 	pad.Parent        = scroll
 
-	local collapsed = false
-	local contentH  = 0
+	local collapsed   = false
+	local contentH    = 0
+	local labelH      = 0
 
 	local function updateCanvas()
 		task.defer(function()
 			contentH = layout.AbsoluteContentSize.Y + 10
 			if collapsed then return end
-			local overflow = (contentH + TITLE_H) > MAX_WIN_H
+			local overflow = (contentH + TITLE_H + labelH) > MAX_WIN_H
 			scroll.ScrollBarThickness = overflow and 4 or 0
-			local targetH = math.clamp(contentH + TITLE_H, TITLE_H + 40, MAX_WIN_H)
+			local targetH = math.clamp(contentH + TITLE_H + labelH, TITLE_H + 40, MAX_WIN_H)
 			frame.Size = UDim2.new(0, WIN_W, 0, targetH)
 		end)
 	end
@@ -187,7 +199,7 @@ function Lib:CreateWindow(title)
 			_tween(frame, 0.25, { Size = UDim2.new(0, WIN_W, 0, TITLE_H) })
 		else
 			colBtn.Text = "−"
-			local targetH = math.clamp(contentH + TITLE_H, TITLE_H + 40, MAX_WIN_H)
+			local targetH = math.clamp(contentH + TITLE_H + labelH, TITLE_H + 40, MAX_WIN_H)
 			_tween(frame, 0.25, { Size = UDim2.new(0, WIN_W, 0, targetH) })
 		end
 	end)
@@ -237,8 +249,17 @@ function Lib:CreateWindow(title)
 	local _order = 0
 	local function nxt() _order += 1; return _order end
 
-	function Win:SetTitle(text)     titleBar.Text = string.upper(text or "Window") end
-	function Win:SetPosition(x, y)  frame.Position = UDim2.new(0, x, 0, y) end
+	function Win:SetTitle(text)    titleBar.Text = string.upper(text or "Window") end
+	function Win:SetPosition(x, y) frame.Position = UDim2.new(0, x, 0, y) end
+
+	function Win:SetLabel(text)
+		labelH                   = 25
+		bottomLabel.Size         = UDim2.new(1,0,0,25)
+		bottomLabel.Text         = text or ""
+		bottomLabel.Visible      = true
+		scroll.Size              = UDim2.new(1,0,0, MAX_WIN_H - TITLE_H - 25)
+		updateCanvas()
+	end
 
 	function Win:Destroy()
 		frame:Destroy()
@@ -251,23 +272,6 @@ function Lib:CreateWindow(title)
 		_reposition()
 	end
 
-	-- LABEL
-	function Win:SetLabel(text)
-    local bottomLabel = Instance.new("TextLabel")
-    bottomLabel.Size             = UDim2.new(1,0,0,25)
-    bottomLabel.AnchorPoint      = Vector2.new(0,1)
-    bottomLabel.Position         = UDim2.new(0,0,1,0)
-    bottomLabel.BackgroundColor3 = Color3.fromRGB(15,15,15)
-    bottomLabel.TextColor3       = Color3.fromRGB(150,150,150)
-    bottomLabel.Font             = Enum.Font.GothamBold
-    bottomLabel.TextSize         = 12
-    bottomLabel.Text             = text or ""
-    bottomLabel.Parent           = frame
-    -- shrink scroll so it doesnt overlap
-    scroll.Size = UDim2.new(1,0,0, MAX_WIN_H - TITLE_H - 25)
-end
-
-	-- SECTION
 	function Win:AddSection(cfg)
 		local text = type(cfg) == "table" and cfg.text or cfg
 		local sec = Instance.new("Frame")
@@ -299,7 +303,6 @@ end
 		updateCanvas()
 	end
 
-	-- BUTTON
 	function Win:AddButton(cfg)
 		local text     = cfg.text or "Button"
 		local flag     = cfg.flag
@@ -340,7 +343,6 @@ end
 		return btn
 	end
 
-	-- TOGGLE
 	function Win:AddToggle(cfg)
 		local text     = cfg.text or "Toggle"
 		local flag     = cfg.flag
@@ -388,7 +390,6 @@ end
 		return T
 	end
 
-	-- SLIDER
 	function Win:AddSlider(cfg)
 		local text     = cfg.text or "Slider"
 		local flag     = cfg.flag
@@ -509,7 +510,6 @@ end
 		return S
 	end
 
-	-- DROPDOWN
 	function Win:AddDropdown(cfg)
 		local headerText = cfg.text or "Dropdown"
 		local flag       = cfg.flag
@@ -600,7 +600,6 @@ end
 		return D
 	end
 
-	-- CREATE FOLDER
 	function Win:CreateFolder(folderName)
 		local tabBtn = Instance.new("TextButton")
 		tabBtn.Size             = UDim2.new(1,0,0,34)
@@ -962,24 +961,6 @@ end
 			return D
 		end
 
-		function Folder:AddLabel(cfg)
-			local text = type(cfg) == "table" and cfg.text or cfg
-			local lbl = Instance.new("TextLabel")
-			lbl.Size                   = UDim2.new(1,0,0,28)
-			lbl.Text                   = text or "Label"
-			lbl.BackgroundTransparency = 1
-			lbl.TextColor3             = Color3.fromRGB(200,200,200)
-			lbl.Font                   = Enum.Font.GothamBold
-			lbl.TextSize               = 13
-			lbl.TextXAlignment         = Enum.TextXAlignment.Left
-			lbl.LayoutOrder            = fnxt()
-			lbl.Parent                 = content
-			local lp = Instance.new("UIPadding")
-			lp.PaddingLeft = UDim.new(0,8); lp.Parent = lbl
-			updateCanvas()
-			return lbl
-		end
-
 		return Folder
 	end
 
@@ -987,7 +968,6 @@ end
 	return Win
 end
 
--- START
 function Lib:Start()
 	_loaded = true
 	for _, fn in ipairs(_pendingShow) do fn() end
@@ -995,7 +975,6 @@ function Lib:Start()
 	_reposition()
 end
 
--- GET FLAG
 function Lib:GetFlag(flag)
 	return _flags[flag]
 end
