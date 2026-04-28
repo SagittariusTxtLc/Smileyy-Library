@@ -131,7 +131,7 @@ function Lib:CreateWindow(title)
 	local colBtn = Instance.new("TextButton")
 	colBtn.Size               = UDim2.new(0,30,0,30)
 	colBtn.Position           = UDim2.new(1,-35,0.5,-15)
-	colBtn.Text               = "−"
+	colBtn.Text               = " "
 	colBtn.BackgroundTransparency = 1
 	colBtn.Font               = Enum.Font.GothamBold
 	colBtn.TextSize           = 20
