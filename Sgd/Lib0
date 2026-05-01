@@ -32,7 +32,7 @@ local WIN_MAR           = 15
 local WIN_Y             = 10
 local TITLE_H           = 40
 local MAX_ITEMS_VISIBLE = 4
-local ITEM_H            = 44
+local ITEM_H            = 50
 local MAX_WIN_H         = TITLE_H + (ITEM_H * MAX_ITEMS_VISIBLE) + 16
 
 local _windows     = {}
