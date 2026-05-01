@@ -1,4 +1,4 @@
-# Smileyy UI
+# RoRed UI
 A lightweight Roblox UI Library With Clean And Aesthetic UI, Version Of Wizard Ui
 
 ## Load Library
@@ -94,6 +94,6 @@ myDrop:Set("B")
 print(myDrop:Get())
 ```
 
-# Made By : That Smileyy YT
+# Made By : SilentRoRed YT
 # CTTO : Tora IsMe YT
 # Inspired By : Wizard Ui Library
