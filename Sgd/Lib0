@@ -186,8 +186,8 @@ line.Parent           = bottomLabel
 	local pad = Instance.new("UIPadding")
 	pad.PaddingTop    = UDim.new(0,5)
 	pad.PaddingBottom = UDim.new(0,5)
-	pad.PaddingLeft   = UDim.new(0,0)
-	pad.PaddingRight  = UDim.new(0,5)
+	pad.PaddingLeft   = UDim.new(0,5)
+	pad.PaddingRight  = UDim.new(0,0)
 	pad.Parent        = scroll
 
 	local collapsed   = false
