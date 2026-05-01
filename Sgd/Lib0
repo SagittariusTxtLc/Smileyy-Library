@@ -357,9 +357,9 @@ end
 		arr.ImageColor3        = Color3.fromRGB(200,200,200)
 		arr.Parent             = btn
 		btn.MouseButton1Click:Connect(function()
-			_tween(btn, 0.08, { BackgroundColor3 = Color3.fromRGB(255,255,255) })
+			_tween(btn, 0.2, { BackgroundColor3 = Color3.fromRGB(255,255,255) })
 			task.delay(0.3, function()
-				_tween(btn, 0.12, { BackgroundColor3 = Color3.fromRGB(25,25,25) })
+				_tween(btn, 0.2, { BackgroundColor3 = Color3.fromRGB(25,25,25) })
 			end)
 			if callback then pcall(callback) end
 		end)
