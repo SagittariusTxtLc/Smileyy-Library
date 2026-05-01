@@ -200,7 +200,7 @@ line.Parent           = bottomLabel
 			contentH = layout.AbsoluteContentSize.Y + 10
 			if collapsed then return end
 			local overflow = (contentH + TITLE_H + labelH) > MAX_WIN_H
-			scroll.ScrollBarThickness = overflow and 4 or 0
+			scroll.ScrollBarThickness = 0
 			local targetH = math.clamp(contentH + TITLE_H + labelH, TITLE_H + 40, MAX_WIN_H)
 			frame.Size = UDim2.new(0, WIN_W, 0, targetH)
 		end)
